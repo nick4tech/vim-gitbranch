@@ -9,6 +9,15 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! gitbranch#name() abort
+  let use_icon = get(g:, 'gitbranch_icon', 0)
+  if use_icon 
+    return ' ' . gitbranch#calculate_name()
+  else
+    return gitbranch#calculate_name()
+  endif
+endfunction
+
+function gitbranch#calculate_name() abort
   if get(b:, 'gitbranch_pwd', '') !=# expand('%:p:h') || !has_key(b:, 'gitbranch_path')
     call gitbranch#detect(expand('%:p:h'))
   endif
